@@ -1,27 +1,47 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import heroImg from './assets/hero.jpg'
 import './App.css'
 
 function App() {
-  const [visible, setVisible] = useState(false)
+  const [heroVisible, setHeroVisible] = useState(false)
+  const [msgVisible, setMsgVisible] = useState(false)
+  const heroRef = useRef(null)
+  const msgRef = useRef(null)
 
   useEffect(() => {
-    const timer = setTimeout(() => setVisible(true), 200)
-    return () => clearTimeout(timer)
+    const observer = new IntersectionObserver(
+      ([entry]) => { if (entry.isIntersecting) setHeroVisible(true) },
+      { threshold: 0.1 }
+    )
+    if (heroRef.current) observer.observe(heroRef.current)
+    return () => observer.disconnect()
+  }, [])
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => { if (entry.isIntersecting) setMsgVisible(true) },
+      { threshold: 0.1 }
+    )
+    if (msgRef.current) observer.observe(msgRef.current)
+    return () => observer.disconnect()
   }, [])
 
   return (
     <main className="birthday-page">
-      <div className={`photo-full ${visible ? 'reveal' : ''}`} style={{ transitionDelay: '0s' }}>
-        <img src={heroImg} alt="Me and my girlfriend's selfie" className="birthday-photo" />
-        <div className="photo-dark-overlay" />
-        <div className={`short-message ${visible ? 'reveal' : ''}`} style={{ transitionDelay: '0.3s' }}>
+      <section ref={heroRef} className={`photo-hero ${heroVisible ? 'reveal' : ''}`}>
+        <img src={heroImg} alt="Me and my girlfriend" className="birthday-photo" />
+        <div className="photo-gradient" />
+        <div className={`hero-content ${heroVisible ? 'reveal' : ''}`}>
           <p className="short-greeting">Happy 18th</p>
           <h1 className="short-text">To My Everything</h1>
         </div>
-      </div>
+        <div className="scroll-hint">
+          <span>scroll</span>
+        </div>
+      </section>
 
-      <section className={`messages-section ${visible ? 'reveal' : ''}`} style={{ transitionDelay: '0.7s' }}>
+      <section ref={msgRef} className={`messages-section ${msgVisible ? 'reveal' : ''}`}>
+        <div className="ornament" />
         <div className="long-message">
           <p className="long-text">
             Hi babyyy, so uhm once again, I'm Chad Walter T. Brion, your boyfriend.
@@ -31,8 +51,8 @@ function App() {
             like sige rakog overthink, soft hearted ko and all, Im sorry about that, I hope dili ka kapoyon saako hahaha.
             Its your birthday naman and I wish you a Good health and everything, I LOVE YOUUUU BABYYYYYYYYYYYYY!!!!!!
           </p>
-          <div className="gold-divider" />
         </div>
+        <div className="ornament" />
       </section>
     </main>
   )
