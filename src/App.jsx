@@ -37,14 +37,25 @@ function App() {
               So i wrote this message for your 18th birthday, I just wanna say HAPPY BIRTHDAYYYYY babyyyyy,
               I know this is not muchpero I hope nindot siya na pag ka himo HEHEHEHE.
             </p>
-            <p className="message-continue">
+            <p className="message-body">
               I know babyy nga kung mag away ta kay dili ta mag ka sinabot, pero we can fix it naman dibaaaa.
+              I know makalabad ko sa ulo nimo tungod saakong attitude and stuff like sige rakog overthink,
+              soft hearted ko and all, Im sorry about that, I hope dili ka kapoyon saako hahaha.
             </p>
-            <p className="message-closing">
-              Its your birthday naman and I wish you a Good health and everything,
+            <p className="message-body">
+              You have been the most beautiful chapter of my life, 18 years of laughter,
+              love, and light. From the very first moment I saw you, I knew you were someone
+              extraordinary. Your kindness, your strength, your radiant spirit — they inspire me
+              every single day.
             </p>
-            <p className="message-signoff">
-              I LOVE YOUUUU BABYYYYYYYYYYYYY!!!!!!
+            <p className="message-body">
+              Today is not just a birthday. It is a celebration of the incredible woman you have
+              become. May this new year bring you all the joy your heart can hold, all the
+              adventures your soul craves, and all the love you so generously give.
+            </p>
+            <p className="message-body">
+              I am so proud to be a part of your story. Here's to forever. I LOVE YOUUUU
+              BABYYYYYYYYYYYYY!!!!!!
             </p>
             <div className="divider" />
           </div>
