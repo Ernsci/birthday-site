@@ -13,10 +13,11 @@ function App() {
     <main className="birthday-page">
       <div className={`photo-section ${visible ? 'reveal' : ''}`} style={{ transitionDelay: '0s' }}>
         <div className="photo-frame">
-          <div className="photo-placeholder">
-            <span className="placeholder-icon">📷</span>
-            <span className="placeholder-text">Your photo here</span>
-          </div>
+          <img
+            src="/assets/hero.jpg"
+            alt="Photo celebrating her 18th birthday"
+            className="birthday-photo"
+          />
           <div className="photo-overlay" />
         </div>
       </div>
