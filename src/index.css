@@ -19,11 +19,12 @@ body {
   color: var(--ink);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  margin: 0;
 }
 
 #root {
   width: 100%;
-  min-height: 100dvh;
+  min-height: 100vh;
 }
 
 @media (prefers-reduced-motion: reduce) {
