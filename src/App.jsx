@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from 'react'
 import heroImg from './assets/hero.jpg'
 
 function App() {
-  const [visible, setVisible] = useState(false)
+  const [visible, setVisible] = useState(true)
   const ref = useRef(null)
 
   useEffect(() => {
