@@ -1,90 +1,44 @@
-import { useState, useEffect, useRef, useMemo } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import heroImg from './assets/hero.jpg'
 import './App.css'
 
-function Petal({ i }) {
-  const size = 8 + (i % 5) * 3
-  const left = (i * 73 % 90) + 5
-  const duration = 6 + (i * 13 % 8)
-  const delay = -(i * 4 % duration)
-  const drift = (i % 2 === 0 ? -1 : 1) * (5 + (i % 4) * 4)
-  const rotation = i * 47 % 360
-
-  return (
-    <span
-      className="petal"
-      style={{
-        '--petal-size': `${size}px`,
-        '--petal-left': `${left}%`,
-        '--petal-duration': `${duration}s`,
-        '--petal-delay': `${delay}s`,
-        '--petal-drift': `${drift}px`,
-        '--petal-rotation': `${rotation}deg`,
-      }}
-      aria-hidden="true"
-    />
-  )
-}
-
-const PETAL_COUNT = 15
-
 function App() {
-  const [heroVisible, setHeroVisible] = useState(false)
-  const [msgVisible, setMsgVisible] = useState(false)
-  const heroRef = useRef(null)
-  const msgRef = useRef(null)
+  const [visible, setVisible] = useState(false)
 
   useEffect(() => {
-    const obs = new IntersectionObserver(
-      ([e]) => { if (e.isIntersecting) setHeroVisible(true) },
-      { threshold: 0.1 }
-    )
-    if (heroRef.current) obs.observe(heroRef.current)
-    return () => obs.disconnect()
+    const timer = setTimeout(() => setVisible(true), 200)
+    return () => clearTimeout(timer)
   }, [])
-
-  useEffect(() => {
-    const obs = new IntersectionObserver(
-      ([e]) => { if (e.isIntersecting) setMsgVisible(true) },
-      { threshold: 0.1 }
-    )
-    if (msgRef.current) obs.observe(msgRef.current)
-    return () => obs.disconnect()
-  }, [])
-
-  const petals = useMemo(() => Array.from({ length: PETAL_COUNT }, (_, i) => i), [])
 
   return (
     <main className="birthday-page">
-      <section ref={heroRef} className={`photo-hero ${heroVisible ? 'reveal' : ''}`}>
-        <img src={heroImg} alt="Selfie of Chad and his girlfriend on her 18th birthday" className="birthday-photo" />
-        <div className="photo-noise" />
-        <div className="photo-gradient" />
-        <div className="petals" aria-hidden="true">
-          {petals.map(i => <Petal key={i} i={i} />)}
+      <section className={`photo-section ${visible ? 'reveal' : ''}`} style={{ transitionDelay: '0s' }}>
+        <div className="photo-wrapper">
+          <img
+            src={heroImg}
+            alt="Selfie of Chad and his girlfriend on her 18th birthday"
+            className="birthday-photo"
+          />
         </div>
-        <div className={`hero-content ${heroVisible ? 'reveal' : ''}`}>
+        <div className="photo-overlay" />
+      </section>
+
+      <section className={`messages-section ${visible ? 'reveal' : ''}`} style={{ transitionDelay: '0.4s' }}>
+        <div className="short-message">
           <p className="short-greeting">Happy 18th</p>
           <h1 className="short-text">To My Everything</h1>
         </div>
-        <div className="scroll-hint" aria-hidden="true">
-          <span>scroll</span>
-        </div>
-      </section>
 
-      <section ref={msgRef} className={`messages-section ${msgVisible ? 'reveal' : ''}`}>
-        <div className="ornament" aria-hidden="true" />
         <div className="long-message">
           <p className="long-text">
             Hi babyyy, so uhm once again, I'm Chad Walter T. Brion, your boyfriend.
             So i wrote this message for your 18th birthday, I just wanna say HAPPY BIRTHDAYYYYY babyyyyy,
-            I know this is not much pero I hope nindot siya na pag ka himo HEHEHEHE. I know babyy nga kung magaway ta kay
+            I know this is not muchpero I hope nindot siya na pag ka himo HEHEHEHE. I know babyy nga kung mag away ta kay
             dili ta mag ka sinabot, pero we can fix it naman dibaaaa, I know makalabad ko sa ulo nimo tungod saakong attitude and stuff
             like sige rakog overthink, soft hearted ko and all, Im sorry about that, I hope dili ka kapoyon saako hahaha.
             Its your birthday naman and I wish you a Good health and everything, I LOVE YOUUUU BABYYYYYYYYYYYYY!!!!!!
           </p>
         </div>
-        <div className="ornament" aria-hidden="true" />
       </section>
     </main>
   )

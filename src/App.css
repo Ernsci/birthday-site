@@ -2,20 +2,12 @@
   --rose: #d4627a;
   --rose-light: #f5c6d0;
   --rose-pale: #fff0f3;
-  --rose-glow: #e8929e;
   --white: #ffffff;
+  --white-warm: #fff8f9;
   --ink: #2d1b2e;
   --ink-soft: #5a4360;
   --gold: #c9956b;
-  --space-xs: 0.25rem;
-  --space-sm: 0.5rem;
-  --space-md: 1rem;
-  --space-lg: 1.5rem;
-  --space-xl: 2rem;
-  --space-2xl: 3rem;
-  --space-3xl: 4rem;
-  --space-4xl: 5rem;
-  --space-5xl: 6rem;
+  --max-width: 60ch;
 }
 
 *, *::before, *::after {
@@ -25,318 +17,161 @@
 }
 
 html {
-  scroll-behavior: smooth;
+  font-size: 16px;
 }
 
-.birthday-page {
-  min-height: 100dvh;
+body {
   font-family: 'Crimson Pro', Georgia, serif;
+  background: var(--rose-pale);
   color: var(--ink);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#root {
+  width: 100%;
+  min-height: 100vh;
+}
+
+/* ========== SPLIT LAYOUT ========== */
+.birthday-page {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
   overflow-x: hidden;
 }
 
-/* ========== PHOTO HERO ========== */
-.photo-hero {
+/* Photo section — left, smaller, fully visible */
+.photo-section {
   position: relative;
-  width: 100%;
-  height: 100vh;
+  flex: 0 0 42%;
+  min-height: 60vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--rose-pale);
   overflow: hidden;
+  clip-path: polygon(0 0, 100% 0, 100% 95%, 0% 100%);
+  order: -1;
+}
+
+@media (max-width: 768px) {
+  .photo-section {
+    flex: 0 0 100%;
+    clip-path: polygon(0 0, 100% 0, 100% 92%, 0 100%);
+    min-height: 40vh;
+  }
+}
+
+.photo-wrapper {
+  position: relative;
+  width: 80%;
+  aspect-ratio: 3 / 4;
 }
 
 .birthday-photo {
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: contain;
   object-position: center center;
   display: block;
+  transition: transform 0.3s ease;
 }
 
-/* iOS Safari dynamic height fallback */
-@supports (height: 100dvh) {
-  .photo-hero {
-    height: 100dvh;
-  }
+.photo-wrapper:hover .birthday-photo {
+  transform: scale(1.02);
 }
 
-/* Noise/grain texture overlay */
-.photo-noise {
+.photo-overlay {
   position: absolute;
   inset: 0;
-  z-index: 1;
-  opacity: 0.08;
-  pointer-events: none;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-  background-size: 128px 128px;
-}
-
-/* Gradient overlay — darkens bottom for text readability */
-.photo-gradient {
-  position: absolute;
-  inset: 0;
-  z-index: 2;
   background: linear-gradient(
     180deg,
-    rgba(20, 12, 18, 0.15) 0%,
-    rgba(20, 12, 18, 0.35) 35%,
-    rgba(20, 12, 18, 0.55) 65%,
-    rgba(20, 12, 18, 0.78) 100%
+    transparent 50%,
+    rgba(212, 98, 122, 0.06) 100%
   );
   pointer-events: none;
 }
 
-/* Subtle vignette */
-.photo-gradient::after {
+/* Messages section — right, takes remaining space */
+.messages-section {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 3rem 2rem 4rem;
+  background: linear-gradient(180deg, var(--rose-pale) 0%, var(--white) 100%);
+  position: relative;
+}
+
+/* Decorative top ornament */
+.messages-section::before {
   content: '';
   position: absolute;
-  inset: 0;
-  background: radial-gradient(ellipse at center, transparent 50%, rgba(20, 12, 18, 0.3) 100%);
+  top: -2rem;
+  right: 2rem;
+  width: 3rem;
+  height: 1px;
+  background: linear-gradient(to left, transparent, var(--gold), transparent);
+  opacity: 0.4;
 }
 
-/* ========== HERO CONTENT ========== */
-.hero-content {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%) translateY(20px);
-  text-align: center;
-  z-index: 3;
-  opacity: 0;
-  transition: opacity 1s ease 0.5s, transform 1s ease 0.5s;
-  max-width: 92%;
-}
-
-.hero-content.reveal {
-  opacity: 1;
-  transform: translate(-50%, -50%) translateY(0);
+/* Short message at top of right section */
+.short-message {
+  text-align: right;
+  margin-bottom: 2rem;
 }
 
 .short-greeting {
   font-family: 'Playfair Display', Georgia, serif;
   font-size: 1rem;
   font-weight: 400;
-  letter-spacing: 0.45em;
+  letter-spacing: 0.4em;
   text-transform: uppercase;
-  color: var(--rose-light);
-  margin-bottom: var(--space-md);
-  opacity: 0;
-  animation: fadeInUp 0.8s ease 0.7s forwards;
+  color: var(--rose);
+  margin-bottom: 0.5rem;
 }
 
 .short-text {
   font-family: 'Playfair Display', Georgia, serif;
-  font-size: clamp(2rem, 7vw, 4rem);
+  font-size: clamp(2rem, 5vw, 3.5rem);
   font-weight: 700;
   line-height: 1.1;
-  color: var(--white);
+  color: var(--ink);
   letter-spacing: -0.01em;
-  text-shadow: 0 2px 30px rgba(0, 0, 0, 0.6), 0 0 60px rgba(212, 98, 122, 0.15);
-  opacity: 0;
-  animation: fadeInUp 0.8s ease 0.9s forwards;
 }
 
-/* ========== SCROLL HINT ========== */
-.scroll-hint {
-  position: absolute;
-  bottom: var(--space-xl);
-  left: 50%;
-  transform: translateX(-50%);
-  z-index: 3;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: var(--space-sm);
-  opacity: 0;
-  animation: fadeInUp 0.8s ease 2s forwards;
-}
-
-.scroll-hint span {
-  font-family: 'Crimson Pro', Georgia, serif;
-  font-size: 0.7rem;
-  letter-spacing: 0.35em;
-  text-transform: uppercase;
-  color: rgba(255, 255, 255, 0.5);
-}
-
-.scroll-hint::after {
-  content: '';
-  width: 1px;
-  height: 2rem;
-  background: linear-gradient(to bottom, rgba(255,255,255,0.4), transparent);
-  animation: scrollPulse 2s ease-in-out infinite;
-}
-
-@keyframes scrollPulse {
-  0% { opacity: 0; transform: scaleY(0); transform-origin: top; }
-  40% { opacity: 0.6; transform: scaleY(1); }
-  100% { opacity: 0; transform: scaleY(0); transform-origin: bottom; }
-}
-
-@keyframes fadeInUp {
-  from { opacity: 0; transform: translateY(16px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-/* ========== MESSAGES SECTION ========== */
-.messages-section {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: var(--space-4xl) var(--space-xl) var(--space-5xl);
-  background: linear-gradient(180deg, var(--rose-pale) 0%, var(--white) 100%);
-  opacity: 0;
-  transform: translateY(24px);
-  transition: opacity 1s ease 0.3s, transform 1s ease 0.3s;
-}
-
-.messages-section.reveal {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-.ornament {
-  width: 2rem;
-  height: 1px;
-  background: linear-gradient(to right, transparent, var(--gold), transparent);
-  opacity: 0.4;
-}
-
+/* Long message — the main love letter */
 .long-message {
-  max-width: 48ch;
-  width: 100%;
-  text-align: center;
-  padding: var(--space-lg) 0;
+  max-width: var(--max-width);
+  text-align: right;
 }
 
 .long-text {
   font-family: 'Crimson Pro', Georgia, serif;
-  font-size: clamp(0.95rem, 1.6vw, 1.15rem);
-  line-height: 2;
+  font-size: clamp(0.95rem, 1.5vw, 1.1rem);
+  line-height: 1.95;
   color: var(--ink);
   letter-spacing: 0.01em;
 }
 
-/* ========== FALLING PETALS ========== */
-.petals {
-  position: absolute;
-  inset: 0;
-  z-index: 1;
-  pointer-events: none;
-  overflow: hidden;
-}
-
-.petal {
-  position: absolute;
-  top: -20px;
-  left: var(--petal-left);
-  width: var(--petal-size);
-  height: var(--petal-size);
-  background: linear-gradient(135deg, rgba(245, 198, 208, 0.6), rgba(212, 98, 122, 0.4));
-  border-radius: 50% 0 50% 50%;
-  transform: rotate(var(--petal-rotation));
-  opacity: 0;
-  animation: fallPetal var(--petal-duration) linear var(--petal-delay) infinite;
-  will-change: transform, opacity;
-}
-
-@keyframes fallPetal {
-  0% {
-    opacity: 0;
-    transform: translate(0, 0) rotate(var(--petal-rotation));
-  }
-  10% {
-    opacity: 0.7;
-  }
-  90% {
-    opacity: 0.5;
-  }
-  100% {
-    opacity: 0;
-    transform: translate(var(--petal-drift), 105vh) rotate(calc(var(--petal-rotation) + 360deg));
-  }
-}
-
-/* ========== BREAKPOINTS — MOBILE FIRST ========== */
-
-/* Small tablet+ */
-@media (min-width: 480px) {
-  .messages-section {
-    padding: var(--space-5xl) var(--space-2xl) var(--space-5xl);
-  }
-}
-
-/* Tablet+ */
-@media (min-width: 768px) {
-  .photo-hero {
-    height: 100vh;
-  }
-  @supports (height: 100dvh) {
-    .photo-hero {
-      height: 100dvh;
-    }
-  }
-  .messages-section {
-    padding: var(--space-5xl) var(--space-3xl) var(--space-5xl);
-  }
-  .long-message {
-    max-width: 44ch;
-  }
-  .short-greeting {
-    font-size: 1.125rem;
-  }
-  .short-text {
-    font-size: clamp(2.5rem, 5vw, 4.5rem);
-  }
-}
-
-/* Desktop+ */
-@media (min-width: 1024px) {
-  .messages-section {
-    padding: var(--space-5xl) var(--space-4xl) var(--space-5xl);
-  }
-  .long-message {
-    max-width: 42ch;
-  }
-  .ornament {
-    width: 2.5rem;
-  }
-}
-
-/* Large desktop */
-@media (min-width: 1440px) {
-  .messages-section {
-    padding: var(--space-5xl) auto var(--space-5xl);
-    max-width: 72ch;
-    margin-left: auto;
-    margin-right: auto;
-  }
-}
-
-/* ========== TOUCH — no hover on touch devices ========== */
-@media (hover: none) {
-  .scroll-hint {
-    display: none;
-  }
+/* Gold underline accent below the long text */
+.long-text+* {
+  width: 3rem;
+  height: 1px;
+  background: var(--gold);
+  margin: 2rem auto 0;
+  opacity: 0.4;
 }
 
 /* ========== REDUCED MOTION ========== */
 @media (prefers-reduced-motion: reduce) {
-  html {
-    scroll-behavior: auto;
+  .birthday-page {
+    overflow: visible;
+    clip-path: none;
   }
-  .hero-content,
-  .messages-section,
-  .short-greeting,
-  .short-text,
-  .scroll-hint,
-  .petal {
-    opacity: 1 !important;
+  .photo-wrapper:hover .birthday-photo {
     transform: none !important;
-    animation: none !important;
-    transition: none !important;
-  }
-  .petal {
-    display: none;
   }
 }
 
@@ -350,4 +185,37 @@ html {
 ::selection {
   background: var(--rose-light);
   color: var(--ink);
+}
+
+/* ========== RESPONSIVE ========== */
+@media (max-width: 768px) {
+  .birthday-page {
+    flex-direction: column-reverse;
+  }
+  .photo-section {
+    order: 1;
+    clip-path: polygon(0 0, 100% 0, 100% 90%, 0 100%);
+  }
+  .messages-section {
+    order: 2;
+    padding: 2rem 1rem 3rem;
+  }
+  .short-message {
+    text-align: center;
+  }
+  .short-text {
+    font-size: clamp(2rem, 8vw, 3.5rem);
+  }
+  .long-text {
+    font-size: clamp(0.9rem, 1.6vw, 1rem);
+  }
+  .long-message+* {
+    display: none;
+  }
+}
+
+@media (max-width: 480px) {
+  .short-greeting {
+    font-size: 0.875rem;
+  }
 }
