@@ -38,6 +38,11 @@ function App() {
               I know this is not muchpero I hope nindot siya na pag ka himo HEHEHEHE.
             </p>
             <p className="message-body">
+              We dated for a month now, and in that short time, you have already become the most
+              meaningful person in my life. From the very first time we met, I felt an undeniable
+              connection — your kindness, your laugh, the way you light up any room.
+            </p>
+            <p className="message-body">
               I know babyy nga kung mag away ta kay dili ta mag ka sinabot, pero we can fix it naman dibaaaa.
               I know makalabad ko sa ulo nimo tungod saakong attitude and stuff like sige rakog overthink,
               soft hearted ko and all, Im sorry about that, I hope dili ka kapoyon saako hahaha.
