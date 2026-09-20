@@ -1,13 +1,15 @@
 :root {
-  --rose: #d4627a;
-  --rose-light: #f5c6d0;
-  --rose-pale: #fff0f3;
+  --bg: #fdf5eb;
+  --bg-dim: #f5e8e0;
+  --primary: #d4627a;
+  --primary-soft: #f5c6d0;
+  --accent: #c9956b;
+  --accent-soft: #e8c9a8;
+  --text: #2d1b2e;
+  --text-soft: #5a4360;
   --white: #ffffff;
-  --white-warm: #fff8f9;
-  --ink: #2d1b2e;
-  --ink-soft: #5a4360;
   --gold: #c9956b;
-  --max-width: 60ch;
+  --max-width: 48ch;
 }
 
 *, *::before, *::after {
@@ -18,204 +20,220 @@
 
 html {
   font-size: 16px;
+  -webkit-text-size-adjust: 100%;
+  scroll-behavior: smooth;
 }
 
 body {
   font-family: 'Crimson Pro', Georgia, serif;
-  background: var(--rose-pale);
-  color: var(--ink);
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.6;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  margin: 0;
+  min-height: 100vh;
 }
 
 #root {
   width: 100%;
-  min-height: 100vh;
+  margin: 0 auto;
+  max-width: 100%;
+  padding: 0 var(--space-sm);
 }
 
-/* ========== SPLIT LAYOUT ========== */
-.birthday-page {
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh;
-  overflow-x: hidden;
-}
-
-/* Photo section — left, smaller, fully visible */
-.photo-section {
+/* ========== HERO SECTION ========== */
+.hero-section {
   position: relative;
-  flex: 0 0 42%;
-  min-height: 60vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: var(--rose-pale);
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  min-height: 400px;
   overflow: hidden;
-  clip-path: polygon(0 0, 100% 0, 100% 95%, 0% 100%);
-  order: -1;
+  background: var(--bg-dim);
 }
 
-@media (max-width: 768px) {
-  .photo-section {
-    flex: 0 0 100%;
-    clip-path: polygon(0 0, 100% 0, 100% 92%, 0 100%);
-    min-height: 40vh;
-  }
-}
-
-.photo-wrapper {
-  position: relative;
-  width: 80%;
-  aspect-ratio: 3 / 4;
-}
-
-.birthday-photo {
+.hero-photo {
   width: 100%;
   height: 100%;
   object-fit: contain;
   object-position: center center;
   display: block;
-  transition: transform 0.3s ease;
+  transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
-.photo-wrapper:hover .birthday-photo {
+.hero-section:hover .hero-photo {
   transform: scale(1.02);
 }
 
-.photo-overlay {
+.hero-overlay {
   position: absolute;
   inset: 0;
   background: linear-gradient(
     180deg,
-    transparent 50%,
-    rgba(212, 98, 122, 0.06) 100%
+    rgba(253, 245, 235, 0) 0%,
+    rgba(253, 245, 235, 0.35) 20%,
+    rgba(253, 245, 235, 0.55) 50%,
+    rgba(253, 245, 235, 0.75) 80%,
+    rgba(253, 245, 235, 0.9) 100%
   );
   pointer-events: none;
 }
 
-/* Messages section — right, takes remaining space */
-.messages-section {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  padding: 3rem 2rem 4rem;
-  background: linear-gradient(180deg, var(--rose-pale) 0%, var(--white) 100%);
-  position: relative;
-}
-
-/* Decorative top ornament */
-.messages-section::before {
-  content: '';
+.hero-caption {
   position: absolute;
-  top: -2rem;
-  right: 2rem;
-  width: 3rem;
-  height: 1px;
-  background: linear-gradient(to left, transparent, var(--gold), transparent);
-  opacity: 0.4;
+  bottom: var(--space-lg);
+  left: var(--space-lg);
+  z-index: 2;
+  max-width: 90%;
 }
 
-/* Short message at top of right section */
-.short-message {
-  text-align: right;
-  margin-bottom: 2rem;
-}
-
-.short-greeting {
+.hero-greeting {
   font-family: 'Playfair Display', Georgia, serif;
   font-size: 1rem;
   font-weight: 400;
-  letter-spacing: 0.4em;
+  letter-spacing: 0.3em;
   text-transform: uppercase;
-  color: var(--rose);
-  margin-bottom: 0.5rem;
+  color: var(--primary);
+  margin-bottom: var(--space-xs);
+  text-shadow: 0 1px 6px rgba(212, 98, 122, 0.3);
 }
 
-.short-text {
+.hero-title {
   font-family: 'Playfair Display', Georgia, serif;
   font-size: clamp(2rem, 5vw, 3.5rem);
   font-weight: 700;
   line-height: 1.1;
-  color: var(--ink);
-  letter-spacing: -0.01em;
+  color: var(--text);
+  letter-spacing: -0.02em;
+  text-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
 }
 
-/* Long message — the main love letter */
-.long-message {
+/* ========== MESSAGE SECTION ========== */
+.message-section {
+  padding: var(--space-4xl) var(--space-xl) var(--space-5xl);
+  background: var(--bg);
+}
+
+.message-content {
   max-width: var(--max-width);
-  text-align: right;
+  margin: 0 auto;
 }
 
-.long-text {
+.message-intro {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 0.875rem;
+  font-weight: 400;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--primary);
+  margin-bottom: var(--space-sm);
+}
+
+.message-body {
   font-family: 'Crimson Pro', Georgia, serif;
   font-size: clamp(0.95rem, 1.5vw, 1.1rem);
-  line-height: 1.95;
-  color: var(--ink);
-  letter-spacing: 0.01em;
+  line-height: 1.9;
+  color: var(--text);
+  margin-bottom: var(--space-md);
 }
 
-/* Gold underline accent below the long text */
-.long-text+* {
-  width: 3rem;
-  height: 1px;
-  background: var(--gold);
-  margin: 2rem auto 0;
-  opacity: 0.4;
+.message-continue {
+  font-family: 'Crimson Pro', Georgia, serif;
+  font-size: clamp(0.95rem, 1.5vw, 1.1rem);
+  line-height: 1.9;
+  color: var(--text);
+  margin-bottom: var(--space-md);
 }
+
+.message-signoff {
+  font-family: 'Crimson Pro', Georgia, serif;
+  font-size: clamp(0.95rem, 1.5vw, 1.1rem);
+  line-height: 1.9;
+  color: var(--text);
+  font-weight: 600;
+}
+
+/* ========== PREMIUM DECORATIVE ========== */
+.divider {
+  width: 4rem;
+  height: 1px;
+  background: linear-gradient(to right, transparent, var(--accent), transparent);
+  opacity: 0.5;
+  margin: var(--space-md) 0;
+}
+
+/* ========== ANIMATIONS ========== */
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.reveal {
+  animation: fadeInUp 0.8s ease forwards;
+}
+
+/* Delayed reveals */
+.hero-section.reveal .hero-photo { animation-delay: 0s; }
+.hero-section.reveal .hero-overlay { animation-delay: 0.1s; }
+.hero-section.reveal .hero-caption .hero-greeting { animation-delay: 0.2s; }
+.hero-section.reveal .hero-caption .hero-title { animation-delay: 0.3s; }
+.message-section.reveal { animation-delay: 0.5s; }
 
 /* ========== REDUCED MOTION ========== */
 @media (prefers-reduced-motion: reduce) {
-  .birthday-page {
-    overflow: visible;
-    clip-path: none;
+  .hero-section,
+  .message-section {
+    animation: none !important;
   }
-  .photo-wrapper:hover .birthday-photo {
+  .hero-section:hover .hero-photo {
     transform: none !important;
   }
 }
 
 /* ========== FOCUS VISIBLE ========== */
 :focus-visible {
-  outline: 2px solid var(--rose);
+  outline: 2px solid var(--primary);
   outline-offset: 3px;
-}
-
-/* ========== SELECTION ========== */
-::selection {
-  background: var(--rose-light);
-  color: var(--ink);
 }
 
 /* ========== RESPONSIVE ========== */
 @media (max-width: 768px) {
-  .birthday-page {
-    flex-direction: column-reverse;
+  .hero-section {
+    aspect-ratio: 3 / 4;
+    min-height: 300px;
   }
-  .photo-section {
-    order: 1;
-    clip-path: polygon(0 0, 100% 0, 100% 90%, 0 100%);
+  .hero-caption {
+    left: var(--space-sm);
+    bottom: var(--space-md);
+    max-width: 95%;
   }
-  .messages-section {
-    order: 2;
-    padding: 2rem 1rem 3rem;
+  .hero-greeting {
+    font-size: 0.875rem;
   }
-  .short-message {
-    text-align: center;
+  .hero-title {
+    font-size: clamp(1.5rem, 6vw, 2.5rem);
   }
-  .short-text {
-    font-size: clamp(2rem, 8vw, 3.5rem);
+  .message-section {
+    padding: var(--space-3xl) var(--space-sm) var(--space-4xl);
   }
-  .long-text {
-    font-size: clamp(0.9rem, 1.6vw, 1rem);
-  }
-  .long-message+* {
-    display: none;
+  .max-width {
+    max-width: none;
   }
 }
 
 @media (max-width: 480px) {
-  .short-greeting {
-    font-size: 0.875rem;
+  .hero-section {
+    aspect-ratio: 2 / 3;
+    min-height: 250px;
+  }
+  .hero-caption {
+    left: var(--space-xs);
+    bottom: var(--space-sm);
+  }
+  .hero-greeting {
+    font-size: 0.75rem;
+  }
+  .hero-title {
+    font-size: clamp(1.25rem, 7vw, 2rem);
   }
 }
