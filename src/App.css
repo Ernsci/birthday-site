@@ -1,4 +1,6 @@
+/* ============ CSS VARIABLES ============ */
 :root {
+  /* Color palette — premium luxury soft pink */
   --bg: #fdf5eb;
   --bg-dim: #f5e8e0;
   --primary: #d4627a;
@@ -9,10 +11,21 @@
   --text-soft: #5a4360;
   --white: #ffffff;
   --gold: #c9956b;
-  --max-width: 48ch;
+  --max-width: 60ch;
+  --space-xs: 0.25rem;
+  --space-sm: 0.5rem;
+  --space-md: 1rem;
+  --space-lg: 1.5rem;
+  --space-xl: 2rem;
+  --space-2xl: 3rem;
+  --space-3xl: 4rem;
+  --space-4xl: 5rem;
 }
 
-*, *::before, *::after {
+/* ============ BASE RESET ============ */
+*,
+*::before,
+*::after {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
@@ -37,12 +50,16 @@ body {
 
 #root {
   width: 100%;
+}
+
+/* ============ CONTAINER ============ */
+.container {
+  max-width: 1200px;
   margin: 0 auto;
-  max-width: 100%;
   padding: 0 var(--space-sm);
 }
 
-/* ========== HERO SECTION ========== */
+/* ============ HERO SECTION ============ */
 .hero-section {
   position: relative;
   width: 100%;
@@ -108,7 +125,7 @@ body {
   text-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
 }
 
-/* ========== MESSAGE SECTION ========== */
+/* ============ MESSAGE SECTION ============ */
 .message-section {
   padding: var(--space-4xl) var(--space-xl) var(--space-5xl);
   background: var(--bg);
@@ -153,7 +170,6 @@ body {
   font-weight: 600;
 }
 
-/* ========== PREMIUM DECORATIVE ========== */
 .divider {
   width: 4rem;
   height: 1px;
@@ -162,7 +178,7 @@ body {
   margin: var(--space-md) 0;
 }
 
-/* ========== ANIMATIONS ========== */
+/* ============ ANIMATIONS ============ */
 @keyframes fadeInUp {
   from { opacity: 0; transform: translateY(20px); }
   to { opacity: 1; transform: translateY(0); }
@@ -179,7 +195,7 @@ body {
 .hero-section.reveal .hero-caption .hero-title { animation-delay: 0.3s; }
 .message-section.reveal { animation-delay: 0.5s; }
 
-/* ========== REDUCED MOTION ========== */
+/* ============ REDUCED MOTION ============ */
 @media (prefers-reduced-motion: reduce) {
   .hero-section,
   .message-section {
@@ -190,13 +206,13 @@ body {
   }
 }
 
-/* ========== FOCUS VISIBLE ========== */
+/* ============ FOCUS VISIBLE ============ */
 :focus-visible {
   outline: 2px solid var(--primary);
   outline-offset: 3px;
 }
 
-/* ========== RESPONSIVE ========== */
+/* ============ RESPONSIVE ============ */
 @media (max-width: 768px) {
   .hero-section {
     aspect-ratio: 3 / 4;
@@ -216,8 +232,8 @@ body {
   .message-section {
     padding: var(--space-3xl) var(--space-sm) var(--space-4xl);
   }
-  .max-width {
-    max-width: none;
+  .container {
+    padding: 0 var(--space-xs);
   }
 }
 
