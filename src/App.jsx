@@ -1,6 +1,5 @@
 import { useState, useEffect, useRef } from 'react'
 import heroImg from './assets/hero.jpg'
-import './App.css'
 
 function App() {
   const [visible, setVisible] = useState(false)
@@ -51,7 +50,7 @@ function App() {
             <p className="message-body">
               We dated for a month now, and in that short time, you have already become the most
               meaningful person in my life. From the very first time we met, I felt an undeniable
-              connection — your kindness, your laugh, the way you light up any room.
+              connection, your kindness, your laugh, imong pag ka maldita.
             </p>
             <p className="message-body">
               I know babyy nga kung mag away ta kay dili ta mag ka sinabot, pero we can fix it naman dibaaaa.
@@ -59,9 +58,8 @@ function App() {
               soft hearted ko and all, Im sorry about that, I hope dili ka kapoyon saako hahaha.
             </p>
             <p className="message-body">
-              You have been the most beautiful chapter of my life, 18 years of laughter,
-              love, and light. From the very first moment I saw you, I knew you were someone
-              extraordinary. Your kindness, your strength, your radiant spirit — they inspire me
+              You have been the most beautiful chapter of my life. From the very first moment I saw you, I knew you were someone
+              extraordinary. Your kindness, your strength, your radiant spirit, they inspire me
               every single day.
             </p>
             <p className="message-body">
