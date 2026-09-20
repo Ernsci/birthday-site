@@ -4,11 +4,22 @@ import './App.css'
 
 function App() {
   const [visible, setVisible] = useState(false)
+  const ref = useRef(null)
 
   useEffect(() => {
     const timer = setTimeout(() => setVisible(true), 200)
     return () => clearTimeout(timer)
   }, [])
+
+  useEffect(() => {
+    const raf = requestAnimationFrame(() => {
+      if (ref.current) {
+        ref.current.style.opacity = '1'
+        ref.current.style.transform = 'translateY(0)'
+      }
+    })
+    return () => cancelAnimationFrame(raf)
+  }, [visible])
 
   return (
     <main className="birthday-page">

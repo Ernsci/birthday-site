@@ -1,9 +1,30 @@
+/* ============ CSS VARIABLES ============ */
 :root {
-  --rose: #d4627a;
-  --ink: #2d1b2e;
+  /* Color palette — premium luxury soft pink */
+  --bg: #fdf5eb;
+  --bg-dim: #f5e8e0;
+  --primary: #d4627a;
+  --primary-soft: #f5c6d0;
+  --accent: #c9956b;
+  --accent-soft: #e8c9a8;
+  --text: #2d1b2e;
+  --text-soft: #5a4360;
+  --white: #ffffff;
+  --gold: #c9956b;
+  --max-width: 60ch;
+  --space-xs: 0.5rem;
+  --space-sm: 1rem;
+  --space-md: 1.5rem;
+  --space-lg: 2rem;
+  --space-xl: 3rem;
+  --space-2xl: 4rem;
+  --transition: 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
-*, *::before, *::after {
+/* ============ BASE RESET ============ */
+*,
+*::before,
+*::after {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
@@ -11,26 +32,352 @@
 
 html {
   font-size: 16px;
+  -webkit-text-size-adjust: 100%;
+  scroll-behavior: smooth;
 }
 
 body {
   font-family: 'Crimson Pro', Georgia, serif;
-  background: #fff0f3;
-  color: var(--ink);
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.6;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   margin: 0;
-}
-
-#root {
-  width: 100%;
   min-height: 100vh;
 }
 
+/* ============ PREMIUM CONTAINER ============ */
+/* A sophisticated container with subtle depth and intentional spacing */
+.main-container {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: var(--space-lg) var(--space-md);
+  background: var(--bg);
+  border-radius: 12px;
+  box-shadow:
+    0 1px 3px rgba(0, 0, 0, 0.05),
+    0 20px 60px rgba(0, 0, 0, 0.1);
+  position: relative;
+  overflow: hidden;
+  transition: box-shadow var(--transition);
+}
+
+.main-container:hover {
+  box-shadow:
+    0 1px 3px rgba(0, 0, 0, 0.05),
+    0 30px 80px rgba(0, 0, 0, 0.12);
+}
+
+.main-container::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--primary), var(--accent), var(--primary));
+  opacity: 0.5;
+}
+
+/* ============ HERO SECTION ============ */
+.hero-section {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  min-height: 420px;
+  overflow: hidden;
+  background: var(--bg-dim);
+  margin: var(--space-lg) 0;
+  border-radius: 12px;
+  isolation: isolate;
+}
+
+.hero-section::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: radial-gradient(at 50% 0, rgba(212, 98, 122, 0.15) 0%, transparent 50%);
+  pointer-events: none;
+}
+
+.hero-photo {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+  transition: transform var(--transition);
+  border-radius: 12px;
+}
+
+.hero-section:hover .hero-photo {
+  transform: scale(1.03);
+}
+
+.hero-photo:active {
+  transform: scale(0.98);
+}
+
+.hero-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    rgba(253, 245, 235, 0) 0%,
+    rgba(253, 245, 235, 0.3) 20%,
+    rgba(253, 245, 235, 0.55) 50%,
+    rgba(253, 245, 235, 0.75) 80%,
+    rgba(253, 245, 235, 0.9) 100%
+  );
+  pointer-events: none;
+}
+
+.hero-caption {
+  position: absolute;
+  bottom: var(--space-lg);
+  left: var(--space-lg);
+  z-index: 2;
+  max-width: 90%;
+}
+
+.hero-greeting {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 1rem;
+  font-weight: 400;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--primary);
+  margin-bottom: var(--space-xs);
+  text-shadow: 0 1px 6px rgba(212, 98, 122, 0.3);
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity var(--transition), transform var(--transition);
+}
+
+.hero-title {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: clamp(2rem, 5vw, 3.5rem);
+  font-weight: 700;
+  line-height: 1.1;
+  color: var(--text);
+  letter-spacing: -0.02em;
+  text-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity var(--transition) 0.2s, transform var(--transition) 0.2s;
+}
+
+/* ============ MESSAGE SECTION ============ */
+.message-section {
+  padding: var(--space-xl) 0;
+  background: var(--bg);
+  overflow: hidden;
+}
+
+.message-section::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(to right, transparent, var(--accent), transparent);
+  opacity: 0.3;
+  margin: var(--space-lg) 0;
+}
+
+.message-content {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: var(--space-md) var(--space-sm);
+  position: relative;
+  z-index: 1;
+}
+
+.message-intro {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 0.875rem;
+  font-weight: 400;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--primary);
+  margin-bottom: var(--space-sm);
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity var(--transition) 0.2s, transform var(--transition) 0.2s;
+}
+
+.message-body {
+  font-family: 'Crimson Pro', Georgia, serif;
+  font-size: clamp(0.95rem, 1.5vw, 1.1rem);
+  line-height: 1.9;
+  color: var(--text);
+  margin-bottom: var(--space-md);
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity var(--transition) 0.3s, transform var(--transition) 0.3s;
+}
+
+.message-body:last-child {
+  margin-bottom: 0;
+}
+
+.message-signoff {
+  font-family: 'Crimson Pro', Georgia, serif;
+  font-size: clamp(0.95rem, 1.5vw, 1.1rem);
+  line-height: 1.9;
+  color: var(--text);
+  font-weight: 600;
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity var(--transition) 0.4s, transform var(--transition) 0.4s;
+}
+
+.divider {
+  width: 5rem;
+  height: 1px;
+  background: linear-gradient(to right, transparent, var(--accent), transparent);
+  opacity: 0.5;
+  margin: var(--space-md) 0;
+}
+
+/* ============ ANIMATIONS ============ */
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(25px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+@keyframes pulse-subtle {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.8; }
+}
+
+.reveal {
+  animation: fadeInUp 0.9s ease forwards;
+}
+
+.reveal-delay-1 { animation-delay: 0.1s; }
+.reveal-delay-2 { animation-delay: 0.2s; }
+.reveal-delay-3 { animation-delay: 0.3s; }
+.reveal-delay-4 { animation-delay: 0.4s; }
+.reveal-delay-5 { animation-delay: 0.5s; }
+
+.hero-section.reveal .hero-photo { animation: fadeInUp 0.8s ease forwards 0s; }
+.hero-section.reveal .hero-overlay { animation: fadeIn 0.6s ease forwards 0.1s; }
+.hero-section.reveal .hero-caption .hero-greeting { animation: fadeInUp 0.6s ease forwards 0.2s; }
+.hero-section.reveal .hero-caption .hero-title { animation: fadeInUp 0.6s ease forwards 0.3s; }
+.message-section.reveal { animation: fadeInUp 0.9s ease forwards 0.5s; }
+
+/* Staggered children */
+.message-section.reveal .message-intro { animation: fadeInUp 0.6s ease forwards 0.5s; }
+.message-section.reveal .message-body:first-child { animation: fadeInUp 0.6s ease forwards 0.6s; }
+.message-section.reveal .message-body:last-child { animation: fadeInUp 0.6s ease forwards 0.7s; }
+.message-section.reveal .message-signoff { animation: fadeInUp 0.6s ease forwards 0.8s; }
+
+/* ============ HOVER INTERACTIONS ============ */
+.hero-photo.hover-lift {
+  transition: transform var(--transition);
+}
+
+.hero-section:hover .hero-photo.hover-lift {
+  transform: scale(1.03) translateY(-8px);
+}
+
+.message-body:hover {
+  background: var(--bg-dim);
+  border-radius: 8px;
+  padding: var(--space-sm);
+  transition: var(--transition);
+}
+
+/* ============ FOCUS VISIBLE ============ */
+:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 3px;
+}
+
+/* ============ RESPONSIVE ============ */
 @media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
+  .hero-section,
+  .message-section {
+    animation: none !important;
+  }
+  .hero-section:hover .hero-photo {
+    transform: none !important;
+  }
+  .message-body:hover {
+    background: transparent;
+    padding: 0;
+    border-radius: 0;
+  }
+}
+
+@media (max-width: 768px) {
+  .hero-section {
+    aspect-ratio: 3 / 4;
+    min-height: 300px;
+    margin: var(--space-md) 0;
+    border-radius: 10px;
+  }
+  .hero-caption {
+    left: var(--space-sm);
+    bottom: var(--space-md);
+    max-width: 95%;
+  }
+  .hero-greeting {
+    font-size: 0.875rem;
+  }
+  .hero-title {
+    font-size: clamp(1.5rem, 6vw, 2.5rem);
+  }
+  .message-section {
+    padding: var(--space-3xl) 0;
+  }
+  .main-container {
+    padding: var(--space-sm);
+    border-radius: 10px;
+  }
+  .main-container::before {
+    height: 2px;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero-section {
+    aspect-ratio: 2 / 3;
+    min-height: 250px;
+    border-radius: 8px;
+  }
+  .hero-caption {
+    left: var(--space-xs);
+    bottom: var(--space-sm);
+  }
+  .hero-greeting {
+    font-size: 0.75rem;
+  }
+  .hero-title {
+    font-size: clamp(1.25rem, 7vw, 2rem);
+  }
+  
+  .message-content {
+    padding: var(--space-xs);
+  }
+  
+  .message-body {
+    font-size: clamp(0.85rem, 1.6vw, 1rem);
   }
 }
