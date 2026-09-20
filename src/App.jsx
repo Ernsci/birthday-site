@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import heroImg from './assets/hero.jpg'
 import './App.css'
 
 function App() {
@@ -14,7 +15,7 @@ function App() {
       <div className={`photo-section ${visible ? 'reveal' : ''}`} style={{ transitionDelay: '0s' }}>
         <div className="photo-frame">
           <img
-            src="/assets/hero.jpg"
+            src={heroImg}
             alt="Photo celebrating her 18th birthday"
             className="birthday-photo"
           />
