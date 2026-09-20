@@ -5,10 +5,9 @@
   --rose-glow: #e8929e;
   --white: #ffffff;
   --white-warm: #fff8f9;
-  --ink: #2d1b2e;
-  --ink-soft: #5a4360;
+  --ink: #f5f0f2;
+  --ink-soft: #e0d4da;
   --gold: #c9956b;
-  --gold-soft: #e8c9a8;
 }
 
 *, *::before, *::after {
@@ -19,159 +18,63 @@
 
 .birthday-page {
   min-height: 100dvh;
-  background: linear-gradient(168deg, var(--rose-pale) 0%, var(--white-warm) 40%, var(--white) 100%);
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  grid-template-rows: 1fr;
-  overflow: hidden;
   font-family: 'Crimson Pro', Georgia, serif;
   color: var(--ink);
-}
-
-@media (max-width: 768px) {
-  .birthday-page {
-    grid-template-columns: 1fr;
-    grid-template-rows: auto 1fr;
-  }
-}
-
-/* Photo Section */
-.photo-section {
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 3rem;
-  background: linear-gradient(135deg, var(--rose-light) 0%, var(--rose-pale) 50%, var(--white) 100%);
-  clip-path: polygon(0 0, 100% 0, 100% 100%, 0% 8%);
-  min-height: 60vh;
-}
-
-@media (max-width: 768px) {
-  .photo-section {
-    clip-path: polygon(0 0, 100% 0, 100% 100%, 0 5%);
-    min-height: 50vh;
-    padding: 2rem 1.5rem;
-    order: -1;
-  }
-}
-
-.photo-frame {
-  position: relative;
-  width: 100%;
-  max-width: 420px;
-  aspect-ratio: 3 / 4;
-  border-radius: 2px;
-  overflow: hidden;
-  box-shadow:
-    0 4px 24px rgba(212, 98, 122, 0.15),
-    0 1px 3px rgba(212, 98, 122, 0.1);
-  border: 3px solid var(--white);
   background: var(--rose-pale);
-  transition: transform 0.4s ease, box-shadow 0.4s ease;
 }
 
-.photo-frame:hover {
-  transform: translateY(-4px);
-  box-shadow:
-    0 8px 32px rgba(212, 98, 122, 0.2),
-    0 2px 6px rgba(212, 98, 122, 0.15);
+/* Full-screen Photo */
+.photo-full {
+  position: relative;
+  width: 100vw;
+  height: 100dvh;
+  overflow: hidden;
+  opacity: 0;
+  transform: scale(1.02);
+  transition: opacity 1.2s ease, transform 1.2s ease;
+}
+
+.photo-full.reveal {
+  opacity: 1;
+  transform: scale(1);
 }
 
 .birthday-photo {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  object-position: center center;
   display: block;
-  transition: transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
-.photo-frame:hover .birthday-photo {
-  transform: scale(1.03);
-}
-
-.photo-placeholder {
-  width: 100%;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 0.75rem;
-  color: var(--rose-light);
-}
-
-.placeholder-icon {
-  font-size: 3rem;
-  opacity: 0.5;
-}
-
-.placeholder-text {
-  font-family: 'Crimson Pro', Georgia, serif;
-  font-size: 0.9rem;
-  letter-spacing: 0.1em;
-  opacity: 0.6;
-}
-
-.photo-overlay {
+.photo-dark-overlay {
   position: absolute;
   inset: 0;
   background: linear-gradient(
     180deg,
-    transparent 50%,
-    rgba(212, 98, 122, 0.08) 100%
+    rgba(20, 12, 18, 0.35) 0%,
+    rgba(20, 12, 18, 0.55) 50%,
+    rgba(20, 12, 18, 0.75) 100%
   );
   pointer-events: none;
 }
 
-/* Messages Section */
-.messages-section {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  padding: 3rem 4rem;
-  position: relative;
-}
-
-@media (max-width: 768px) {
-  .messages-section {
-    padding: 2rem 1.5rem 3rem;
-  }
-}
-
-/* Decorative ornamental line */
-.messages-section::before {
-  content: '';
+/* Short Message overlaid on photo */
+.short-message {
   position: absolute;
   top: 50%;
-  left: -2rem;
-  width: 1px;
-  height: 60%;
-  background: linear-gradient(
-    to bottom,
-    transparent,
-    var(--rose-light),
-    transparent
-  );
-  opacity: 0.4;
-}
-
-@media (max-width: 768px) {
-  .messages-section::before {
-    display: none;
-  }
-}
-
-/* Short Message */
-.short-message {
+  left: 50%;
+  transform: translate(-50%, -50%) translateY(24px);
+  text-align: center;
+  z-index: 2;
   opacity: 0;
-  transform: translateY(24px);
-  transition: opacity 0.8s ease, transform 0.8s ease;
+  transition: opacity 0.8s ease 0.2s, transform 0.8s ease 0.2s;
+  max-width: 90%;
 }
 
 .short-message.reveal {
   opacity: 1;
-  transform: translateY(0);
+  transform: translate(-50%, -50%) translateY(0);
 }
 
 .short-greeting {
@@ -180,73 +83,134 @@
   font-weight: 400;
   letter-spacing: 0.35em;
   text-transform: uppercase;
-  color: var(--rose);
-  margin-bottom: 0.5rem;
+  color: var(--rose-light);
+  margin-bottom: 0.75rem;
 }
 
 .short-text {
   font-family: 'Playfair Display', Georgia, serif;
-  font-size: clamp(2.5rem, 5vw, 4rem);
+  font-size: clamp(2.5rem, 6vw, 4.5rem);
   font-weight: 700;
   line-height: 1.1;
-  color: var(--ink);
+  color: var(--white);
   letter-spacing: -0.02em;
+  text-shadow: 0 2px 20px rgba(0, 0, 0, 0.4);
 }
 
-/* Long Message */
-.long-message {
+/* Messages Section below photo */
+.messages-section {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 4rem 2rem 5rem;
+  background: linear-gradient(180deg, var(--rose-pale) 0%, var(--white) 100%);
   opacity: 0;
   transform: translateY(20px);
   transition: opacity 0.8s ease 0.2s, transform 0.8s ease 0.2s;
-  margin-top: 2.5rem;
 }
 
-.long-message.reveal {
+.messages-section.reveal {
   opacity: 1;
   transform: translateY(0);
 }
 
+.long-message {
+  max-width: 52ch;
+  text-align: center;
+}
+
 .long-text {
   font-family: 'Crimson Pro', Georgia, serif;
-  font-size: clamp(1rem, 1.5vw, 1.15rem);
-  line-height: 1.85;
-  color: var(--ink-soft);
-  max-width: 48ch;
+  font-size: clamp(1rem, 1.6vw, 1.2rem);
+  line-height: 1.9;
+  color: var(--ink);
 }
 
-
-
-/* Staggered reveal base classes */
-.photo-section {
-  opacity: 0;
-  transform: scale(0.97);
-  transition: opacity 0.9s ease, transform 0.9s ease;
-}
-
-.photo-section.reveal {
-  opacity: 1;
-  transform: scale(1);
-}
-
-/* Gold divider accent */
-.long-message::after {
-  content: '';
-  display: block;
+.gold-divider {
   width: 3rem;
   height: 1px;
   background: var(--gold);
-  margin-top: 2rem;
+  margin: 2.5rem auto 0;
   opacity: 0.5;
+}
+
+/* Scroll indicator */
+.scroll-hint {
+  position: absolute;
+  bottom: 2rem;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  opacity: 0;
+  animation: fadeInUp 1s ease 1.5s forwards;
+}
+
+.scroll-hint span {
+  font-family: 'Crimson Pro', Georgia, serif;
+  font-size: 0.8rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--white);
+  opacity: 0.7;
+}
+
+.scroll-hint::after {
+  content: '';
+  width: 1px;
+  height: 2rem;
+  background: linear-gradient(to bottom, var(--white), transparent);
+  animation: scrollLine 1.5s ease-in-out infinite;
+}
+
+@keyframes scrollLine {
+  0% { opacity: 0; transform: scaleY(0); }
+  50% { opacity: 0.6; transform: scaleY(1); }
+  100% { opacity: 0; transform: scaleY(0); }
+}
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateX(-50%) translateY(10px); }
+  to { opacity: 0.7; transform: translateX(-50%) translateY(0); }
 }
 
 /* Reduced motion */
 @media (prefers-reduced-motion: reduce) {
+  .photo-full,
   .short-message,
-  .long-message,
-  .photo-section {
+  .messages-section {
     opacity: 1 !important;
     transform: none !important;
     transition: none !important;
   }
+  .scroll-hint {
+    animation: none !important;
+    opacity: 0.7 !important;
+  }
+  .scroll-hint::after {
+    animation: none !important;
+    opacity: 0.4 !important;
+  }
 }
 
+/* Responsive */
+@media (max-width: 768px) {
+  .photo-full {
+    height: 85dvh;
+  }
+  .messages-section {
+    padding: 3rem 1.5rem 4rem;
+  }
+  .short-greeting {
+    font-size: 1rem;
+    letter-spacing: 0.25em;
+  }
+  .short-text {
+    font-size: clamp(2rem, 7vw, 3.5rem);
+  }
+}

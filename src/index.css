@@ -1,12 +1,6 @@
 :root {
   --rose: #d4627a;
-  --rose-light: #f5c6d0;
-  --rose-pale: #fff0f3;
-  --white: #ffffff;
-  --white-warm: #fff8f9;
   --ink: #2d1b2e;
-  --ink-soft: #5a4360;
-  --gold: #c9956b;
 }
 
 *, *::before, *::after {
@@ -21,7 +15,7 @@ html {
 
 body {
   font-family: 'Crimson Pro', Georgia, serif;
-  background: var(--white-warm);
+  background: #fff0f3;
   color: var(--ink);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
