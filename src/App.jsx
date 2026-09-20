@@ -31,17 +31,12 @@ function App() {
 
         <div className={`long-message ${visible ? 'reveal' : ''}`} style={{ transitionDelay: '0.8s' }}>
           <p className="long-text">
-            Eighteen years of laughter, love, and light — you have been the most
-            beautiful chapter of my life. From the very first moment I saw you, I
-            knew you were someone extraordinary. Your kindness, your strength,
-            your radiant spirit — they inspire me every single day.
-            <br /><br />
-            Today is not just a birthday. It is a celebration of the incredible
-            woman you have become. May this new year bring you all the joy your
-            heart can hold, all the adventures your soul craves, and all the
-            love you so generously give.
-            <br /><br />
-            I am so proud to be a part of your story. Here&rsquo;s to forever.
+            Hi babyyy, so uhm once again, I'm Chad Walter T. Brion, your boyfriend.
+            So i wrote this message for your 18th birthday, I just wanna say HAPPY BIRTHDAYYYYY babyyyyy,
+            I know this is not much pero I hope nindot siya na pag ka himo HEHEHEHE. I know babyy nga kung mag away ta kay
+            dili ta mag ka sinabot, pero we can fix it naman dibaaaa, I know makalabad ko sa ulo nimo tungod saakong attitude and stuff
+            like sige rakog overthink, soft hearted ko and all, Im sorry about that, I hope dili ka kapoyon saako hahaha.
+            Its your birthday naman and I wish you a Good health and everything, I LOVE YOUUUU BABYYYYYYYYYYYYY!!!!!!
           </p>
         </div>
       </section>
