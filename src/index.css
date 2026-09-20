@@ -1,0 +1,41 @@
+:root {
+  --rose: #d4627a;
+  --rose-light: #f5c6d0;
+  --rose-pale: #fff0f3;
+  --white: #ffffff;
+  --white-warm: #fff8f9;
+  --ink: #2d1b2e;
+  --ink-soft: #5a4360;
+  --gold: #c9956b;
+}
+
+*, *::before, *::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 16px;
+}
+
+body {
+  font-family: 'Crimson Pro', Georgia, serif;
+  background: var(--white-warm);
+  color: var(--ink);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#root {
+  width: 100%;
+  min-height: 100dvh;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
