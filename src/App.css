@@ -12,14 +12,12 @@
   --white: #ffffff;
   --gold: #c9956b;
   --max-width: 60ch;
-  --space-xs: 0.25rem;
-  --space-sm: 0.5rem;
-  --space-md: 1rem;
-  --space-lg: 1.5rem;
-  --space-xl: 2rem;
-  --space-2xl: 3rem;
-  --space-3xl: 4rem;
-  --space-4xl: 5rem;
+  --space-xs: 0.5rem;
+  --space-sm: 1rem;
+  --space-md: 1.5rem;
+  --space-lg: 2rem;
+  --space-xl: 3rem;
+  --space-2xl: 4rem;
 }
 
 /* ============ BASE RESET ============ */
@@ -48,15 +46,31 @@ body {
   min-height: 100vh;
 }
 
-#root {
-  width: 100%;
+/* ============ PREMIUM CONTAINER ============ */
+/* A sophisticated container with subtle depth and intentional spacing */
+.main-container {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: var(--space-lg) var(--space-md);
+  background: var(--bg);
+  border-radius: 8px;
+  box-shadow: 
+    0 1px 3px rgba(0, 0, 0, 0.05),
+    0 10px 40px rgba(0, 0, 0, 0.08);
+  position: relative;
+  overflow: hidden;
 }
 
-/* ============ CONTAINER ============ */
-.container {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 var(--space-sm);
+/* Decorative top accent line */
+.main-container::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--primary), var(--accent), var(--primary));
+  opacity: 0.4;
 }
 
 /* ============ HERO SECTION ============ */
@@ -67,6 +81,7 @@ body {
   min-height: 400px;
   overflow: hidden;
   background: var(--bg-dim);
+  margin: var(--space-lg) 0;
 }
 
 .hero-photo {
@@ -127,13 +142,14 @@ body {
 
 /* ============ MESSAGE SECTION ============ */
 .message-section {
-  padding: var(--space-4xl) var(--space-xl) var(--space-5xl);
+  padding: var(--space-xl) 0;
   background: var(--bg);
 }
 
 .message-content {
   max-width: var(--max-width);
   margin: 0 auto;
+  padding: var(--space-md) var(--space-sm);
 }
 
 .message-intro {
@@ -217,6 +233,7 @@ body {
   .hero-section {
     aspect-ratio: 3 / 4;
     min-height: 300px;
+    margin: var(--space-md) 0;
   }
   .hero-caption {
     left: var(--space-sm);
@@ -230,10 +247,13 @@ body {
     font-size: clamp(1.5rem, 6vw, 2.5rem);
   }
   .message-section {
-    padding: var(--space-3xl) var(--space-sm) var(--space-4xl);
+    padding: var(--space-3xl) 0;
   }
-  .container {
-    padding: 0 var(--space-xs);
+  .main-container {
+    padding: var(--space-sm);
+  }
+  .main-container::before {
+    height: 2px;
   }
 }
 
