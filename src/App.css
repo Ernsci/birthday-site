@@ -7,12 +7,25 @@
   --ink: #2d1b2e;
   --ink-soft: #5a4360;
   --gold: #c9956b;
+  --space-xs: 0.25rem;
+  --space-sm: 0.5rem;
+  --space-md: 1rem;
+  --space-lg: 1.5rem;
+  --space-xl: 2rem;
+  --space-2xl: 3rem;
+  --space-3xl: 4rem;
+  --space-4xl: 5rem;
+  --space-5xl: 6rem;
 }
 
 *, *::before, *::after {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
 }
 
 .birthday-page {
@@ -25,8 +38,9 @@
 /* ========== PHOTO HERO ========== */
 .photo-hero {
   position: relative;
-  width: 100vw;
+  width: 100%;
   height: 100dvh;
+  min-height: 500px;
   overflow: hidden;
 }
 
@@ -36,24 +50,40 @@
   object-fit: cover;
   object-position: center center;
   display: block;
-  transition: transform 0.15s ease-out;
 }
 
-.photo-hero:hover .birthday-photo {
-  transform: scale(1.02);
+/* Noise/grain texture overlay */
+.photo-noise {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  opacity: 0.08;
+  pointer-events: none;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 128px 128px;
 }
 
+/* Gradient overlay — darkens bottom for text readability */
 .photo-gradient {
   position: absolute;
   inset: 0;
+  z-index: 2;
   background: linear-gradient(
     180deg,
-    rgba(20, 12, 18, 0.25) 0%,
-    rgba(20, 12, 18, 0.45) 40%,
-    rgba(20, 12, 18, 0.6) 70%,
+    rgba(20, 12, 18, 0.15) 0%,
+    rgba(20, 12, 18, 0.35) 35%,
+    rgba(20, 12, 18, 0.55) 65%,
     rgba(20, 12, 18, 0.78) 100%
   );
   pointer-events: none;
+}
+
+/* Subtle vignette */
+.photo-gradient::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at center, transparent 50%, rgba(20, 12, 18, 0.3) 100%);
 }
 
 /* ========== HERO CONTENT ========== */
@@ -61,11 +91,11 @@
   position: absolute;
   top: 50%;
   left: 50%;
-  transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%) translateY(20px);
   text-align: center;
-  z-index: 2;
+  z-index: 3;
   opacity: 0;
-  transition: opacity 1s ease 0.4s, transform 1s ease 0.4s;
+  transition: opacity 1s ease 0.5s, transform 1s ease 0.5s;
   max-width: 92%;
 }
 
@@ -76,67 +106,67 @@
 
 .short-greeting {
   font-family: 'Playfair Display', Georgia, serif;
-  font-size: 1.125rem;
+  font-size: 1rem;
   font-weight: 400;
-  letter-spacing: 0.5em;
+  letter-spacing: 0.45em;
   text-transform: uppercase;
   color: var(--rose-light);
-  margin-bottom: 1rem;
+  margin-bottom: var(--space-md);
   opacity: 0;
-  animation: fadeInUp 1s ease 0.6s forwards;
+  animation: fadeInUp 0.8s ease 0.7s forwards;
 }
 
 .short-text {
   font-family: 'Playfair Display', Georgia, serif;
-  font-size: clamp(2.5rem, 6vw, 5rem);
+  font-size: clamp(2rem, 7vw, 4rem);
   font-weight: 700;
   line-height: 1.1;
   color: var(--white);
-  letter-spacing: -0.02em;
-  text-shadow: 0 2px 30px rgba(0, 0, 0, 0.5);
+  letter-spacing: -0.01em;
+  text-shadow: 0 2px 30px rgba(0, 0, 0, 0.6), 0 0 60px rgba(212, 98, 122, 0.15);
   opacity: 0;
-  animation: fadeInUp 1s ease 0.8s forwards;
+  animation: fadeInUp 0.8s ease 0.9s forwards;
 }
 
 /* ========== SCROLL HINT ========== */
 .scroll-hint {
   position: absolute;
-  bottom: 2.5rem;
+  bottom: var(--space-xl);
   left: 50%;
   transform: translateX(-50%);
-  z-index: 2;
+  z-index: 3;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 0.5rem;
+  gap: var(--space-sm);
   opacity: 0;
-  animation: fadeInUp 1s ease 1.8s forwards;
+  animation: fadeInUp 0.8s ease 2s forwards;
 }
 
 .scroll-hint span {
   font-family: 'Crimson Pro', Georgia, serif;
-  font-size: 0.75rem;
-  letter-spacing: 0.3em;
+  font-size: 0.7rem;
+  letter-spacing: 0.35em;
   text-transform: uppercase;
-  color: rgba(255, 255, 255, 0.6);
+  color: rgba(255, 255, 255, 0.5);
 }
 
 .scroll-hint::after {
   content: '';
   width: 1px;
-  height: 2.5rem;
-  background: linear-gradient(to bottom, rgba(255,255,255,0.5), transparent);
-  animation: scrollPulse 1.8s ease-in-out infinite;
+  height: 2rem;
+  background: linear-gradient(to bottom, rgba(255,255,255,0.4), transparent);
+  animation: scrollPulse 2s ease-in-out infinite;
 }
 
 @keyframes scrollPulse {
   0% { opacity: 0; transform: scaleY(0); transform-origin: top; }
-  40% { opacity: 0.7; transform: scaleY(1); }
+  40% { opacity: 0.6; transform: scaleY(1); }
   100% { opacity: 0; transform: scaleY(0); transform-origin: bottom; }
 }
 
 @keyframes fadeInUp {
-  from { opacity: 0; transform: translateY(15px); }
+  from { opacity: 0; transform: translateY(16px); }
   to { opacity: 1; transform: translateY(0); }
 }
 
@@ -146,10 +176,10 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 5rem 2rem 6rem;
+  padding: var(--space-4xl) var(--space-xl) var(--space-5xl);
   background: linear-gradient(180deg, var(--rose-pale) 0%, var(--white) 100%);
   opacity: 0;
-  transform: translateY(30px);
+  transform: translateY(24px);
   transition: opacity 1s ease 0.3s, transform 1s ease 0.3s;
 }
 
@@ -159,28 +189,94 @@
 }
 
 .ornament {
-  width: 2.5rem;
+  width: 2rem;
   height: 1px;
   background: linear-gradient(to right, transparent, var(--gold), transparent);
-  opacity: 0.5;
+  opacity: 0.4;
 }
 
 .long-message {
-  max-width: 52ch;
+  max-width: 48ch;
+  width: 100%;
   text-align: center;
-  padding: 1rem 0;
+  padding: var(--space-lg) 0;
 }
 
 .long-text {
   font-family: 'Crimson Pro', Georgia, serif;
-  font-size: clamp(1rem, 1.6vw, 1.2rem);
+  font-size: clamp(0.95rem, 1.6vw, 1.15rem);
   line-height: 2;
   color: var(--ink);
   letter-spacing: 0.01em;
 }
 
+/* ========== BREAKPOINTS — MOBILE FIRST ========== */
+
+/* Small tablet+ */
+@media (min-width: 480px) {
+  .photo-hero {
+    min-height: 550px;
+  }
+  .messages-section {
+    padding: var(--space-5xl) var(--space-2xl) var(--space-5xl);
+  }
+}
+
+/* Tablet+ */
+@media (min-width: 768px) {
+  .photo-hero {
+    height: 100dvh;
+    min-height: unset;
+  }
+  .messages-section {
+    padding: var(--space-5xl) var(--space-3xl) var(--space-5xl);
+  }
+  .long-message {
+    max-width: 44ch;
+  }
+  .short-greeting {
+    font-size: 1.125rem;
+  }
+  .short-text {
+    font-size: clamp(2.5rem, 5vw, 4.5rem);
+  }
+}
+
+/* Desktop+ */
+@media (min-width: 1024px) {
+  .messages-section {
+    padding: var(--space-5xl) var(--space-4xl) var(--space-5xl);
+  }
+  .long-message {
+    max-width: 42ch;
+  }
+  .ornament {
+    width: 2.5rem;
+  }
+}
+
+/* Large desktop */
+@media (min-width: 1440px) {
+  .messages-section {
+    padding: var(--space-5xl) auto var(--space-5xl);
+    max-width: 72ch;
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+
+/* ========== TOUCH — no hover on touch devices ========== */
+@media (hover: none) {
+  .scroll-hint {
+    display: none;
+  }
+}
+
 /* ========== REDUCED MOTION ========== */
 @media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
   .hero-content,
   .messages-section,
   .short-greeting,
@@ -191,33 +287,16 @@
     animation: none !important;
     transition: none !important;
   }
-  .photo-hero:hover .birthday-photo {
-    transform: none !important;
-  }
 }
 
-/* ========== RESPONSIVE ========== */
-@media (max-width: 768px) {
-  .photo-hero {
-    height: 88dvh;
-  }
-  .messages-section {
-    padding: 4rem 1.5rem 5rem;
-  }
-  .short-greeting {
-    font-size: 1rem;
-    letter-spacing: 0.3em;
-  }
-  .short-text {
-    font-size: clamp(2rem, 8vw, 3.5rem);
-  }
-  .long-text {
-    line-height: 1.95;
-  }
+/* ========== FOCUS VISIBLE ========== */
+:focus-visible {
+  outline: 2px solid var(--rose);
+  outline-offset: 3px;
 }
 
-@media (max-width: 480px) {
-  .messages-section {
-    padding: 3rem 1.25rem 4rem;
-  }
+/* ========== SELECTION ========== */
+::selection {
+  background: var(--rose-light);
+  color: var(--ink);
 }
